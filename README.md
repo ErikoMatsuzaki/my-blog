@@ -1,4 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# モダンなブログウェブサイト
+
+これは[Next.js](https://nextjs.org)で構築された現代的なブログウェブサイトです。Markdownファイルをベースとしたコンテンツ管理機能を持ち、Azure Static Web Appsにデプロイされています。
+
+## 機能
+
+- Markdownによるブログ投稿管理
+- レスポンシブデザイン
+- TypeScriptとTailwind CSSによる開発
+- Azure Static Web Appsによるホスティング
+
+## 開発ワークフロー
+
+このプロジェクトは、Gitによるバージョン管理とブランチ戦略を採用しています：
+
+1. `develop`ブランチ - 開発用ブランチ。すべての新機能や修正はこのブランチに対して行います。
+2. `main`ブランチ - 本番用ブランチ。安定したコードのみがマージされます。
+
+### 作業の流れ
+
+1. 新機能や修正を行う場合は、`develop`ブランチからフィーチャーブランチを作成します。
+   ```bash
+   git checkout develop
+   git checkout -b feature/new-feature-name
+   ```
+
+2. 変更を加えてコミットします。
+   ```bash
+   git add .
+   git commit -m "Add new feature: description"
+   ```
+
+3. 変更を`develop`ブランチにマージします。
+   ```bash
+   git checkout develop
+   git merge feature/new-feature-name
+   git push origin develop
+   ```
+
+4. 十分にテストした後、`develop`ブランチから`main`ブランチへプルリクエストを作成し、マージします。
+   これにより、GitHub Actionsを通じてAzure Static Web Appsへの自動デプロイが実行されます。
 
 ## Getting Started
 
@@ -29,8 +69,17 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Azure Static Web Appsへのデプロイ
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+このプロジェクトはAzure Static Web Appsにデプロイされています。デプロイプロセスは以下の通りです：
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. GitHubリポジトリの`main`ブランチへの変更がプッシュされると、GitHub Actionsが自動的に実行されます。
+2. GitHub Actionsにより、Next.jsアプリケーションがビルドされ、Azure Static Web Appsにデプロイされます。
+
+### Azure Static Web Appsの設定
+
+Azure Static Web Appsの設定は`.github/workflows/azure-static-web-apps-brave-smoke-0eb159000.yml`ファイルで管理されています。このファイルには、ビルドとデプロイのプロセスに必要な設定が含まれています。
+
+カスタムドメインの設定や環境変数の追加など、追加の設定はAzureポータルで行うことができます。
+
+詳細については、[Azure Static Web Apps のドキュメント](https://learn.microsoft.com/ja-jp/azure/static-web-apps/)を参照してください。
