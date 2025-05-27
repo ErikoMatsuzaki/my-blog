@@ -1,0 +1,92 @@
+import Image from "next/image";
+import Link from "next/link";
+
+// サンプル記事データ（後でCMSや外部ファイルから取得するように変更可能）
+const posts = [
+  {
+    id: 1,
+    title: "ブログサイトをNext.jsで構築しました",
+    slug: "created-blog-with-nextjs",
+    excerpt: "モダンな技術スタックを使ってブログサイトを構築した経験について共有します。",
+    date: "2025-05-27",
+    category: "IT技術",
+    coverImage: "/next.svg"
+  },
+  {
+    id: 2,
+    title: "日常の小さな発見",
+    slug: "daily-discoveries",
+    excerpt: "日常生活の中で見つけた小さな発見や気づきについての記録です。",
+    date: "2025-05-26",
+    category: "日常",
+    coverImage: "/vercel.svg"
+  },
+  {
+    id: 3,
+    title: "Azure上でのデプロイ方法",
+    slug: "deploy-on-azure",
+    excerpt: "Next.jsで作成したブログサイトをAzureの無料枠でデプロイする方法を解説します。",
+    date: "2025-05-25",
+    category: "IT技術",
+    coverImage: "/globe.svg"
+  },
+];
+
+export default function Home() {
+  return (
+    <div className="space-y-8">
+      {/* ヒーローセクション */}
+      <section className="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg p-8 mb-8">
+        <div className="max-w-3xl">
+          <h1 className="text-4xl font-bold mb-4">My Blog</h1>
+          <p className="text-xl opacity-90 mb-6">日常の出来事やIT技術についての記録</p>
+          <p className="opacity-80">
+            このブログでは、日々の生活で感じたことや、IT技術に関する情報を発信していきます。
+            モダンなWeb技術や開発環境についての記事も随時更新予定です。
+          </p>
+        </div>
+      </section>
+      
+      {/* 最新記事セクション */}
+      <section>
+        <h2 className="text-2xl font-bold mb-6 border-b pb-2">最新の記事</h2>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {posts.map(post => (
+            <article key={post.id} className="bg-white rounded-lg overflow-hidden shadow hover:shadow-md transition-shadow">
+              <div className="h-40 bg-gray-100 relative">
+                <Image
+                  src={post.coverImage}
+                  alt={post.title}
+                  fill
+                  className="object-contain p-4"
+                />
+              </div>
+              <div className="p-5">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-xs text-blue-600 font-medium bg-blue-50 px-2 py-1 rounded">
+                    {post.category}
+                  </span>
+                  <time className="text-xs text-gray-500">{post.date}</time>
+                </div>
+                <Link href={`/blog/${post.slug}`}>
+                  <h3 className="text-xl font-semibold mb-2 hover:text-blue-600 transition-colors">
+                    {post.title}
+                  </h3>
+                </Link>
+                <p className="text-gray-600 line-clamp-3">{post.excerpt}</p>
+                <Link 
+                  href={`/blog/${post.slug}`}
+                  className="mt-4 inline-block text-blue-600 hover:underline"
+                >
+                  続きを読む →
+                </Link>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+}
