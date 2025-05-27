@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
 
 // サンプル記事データ（後でCMSや外部ファイルから取得するように変更可能）
 const postsData = [
@@ -141,9 +142,31 @@ GitHubリポジトリにワークフローファイルが自動的に追加さ�
 
 Azureの無料枠を使えば、個人ブログのような小規模なサイトなら、費用をかけずに運用できます。
 また、GitHubとの連携により、継続的なデプロイも簡単に設定できるので、記事の追加や修正もスムーズに行えます。
-`
-  },
+`  },
 ];
+
+// 静的パラメータを生成する関数
+export function generateStaticParams() {
+  return postsData.map((post) => ({
+    slug: post.slug,
+  }));
+}
+
+// メタデータを生成
+export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
+  const post = postsData.find(post => post.slug === params.slug);
+  
+  if (!post) {
+    return {
+      title: '記事が見つかりません',
+    };
+  }
+  
+  return {
+    title: `${post.title} | My Blog`,
+    description: post.excerpt,
+  };
+}
 
 export default function BlogPost({ params }: { params: { slug: string } }) {
   // 該当する記事データを取得
